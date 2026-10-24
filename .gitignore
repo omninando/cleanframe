@@ -1,0 +1,15 @@
+.gradle/
+build/
+local.properties
+.idea/
+*.iml
+.DS_Store
+captures/
+*.apk
+*.ap_
+*.aab
+
+# Local TV captures that are not part of the docs
+screenshots/now.png
+screenshots/fade.png
+screenshots/google-tv.png
