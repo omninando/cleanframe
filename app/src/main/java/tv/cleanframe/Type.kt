@@ -76,6 +76,15 @@ fun clockStyle(choice: TypefaceChoice) = TextStyle(
     shadow = QuietShadow,
 )
 
+fun placeStyle(choice: TypefaceChoice) = TextStyle(
+    fontFamily = typeface(choice),
+    fontWeight = FontWeight.Normal,
+    fontSize = 13.sp,
+    letterSpacing = (-0.1).sp,
+    lineHeight = 16.sp,
+    shadow = QuietShadow,
+)
+
 fun controlStyle(choice: TypefaceChoice) = TextStyle(
     fontFamily = typeface(choice),
     fontWeight = FontWeight.Normal,

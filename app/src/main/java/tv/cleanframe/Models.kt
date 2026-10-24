@@ -21,25 +21,26 @@ data class Wallpaper(
     val name: String,
     @DrawableRes val image: Int,
     val credit: String,
+    val place: String? = null,
 )
 
 val Wallpapers = listOf(
     Wallpaper("waterfall", "Waterfall", R.drawable.wallpaper_waterfall, "Unsplash"),
-    Wallpaper("ripples", "Ripples", R.drawable.wallpaper_ripples, "Unsplash"),
+    Wallpaper("ripples", "Ripples", R.drawable.wallpaper_ripples, "Unsplash", "Tadoussac, Canada"),
     Wallpaper("desert", "Desert", R.drawable.wallpaper_desert, "Unsplash"),
-    Wallpaper("aurora", "Aurora", R.drawable.wallpaper_aurora, "Unsplash"),
+    Wallpaper("aurora", "Aurora", R.drawable.wallpaper_aurora, "Unsplash", "Saskatoon, Canada"),
     Wallpaper("golden", "Golden", R.drawable.wallpaper_golden, "Unsplash"),
     Wallpaper("tower", "Tower", R.drawable.wallpaper_tower, "Unsplash"),
-    Wallpaper("koi", "Koi", R.drawable.wallpaper_koi, "Unsplash"),
+    Wallpaper("koi", "Koi", R.drawable.wallpaper_koi, "Unsplash", "Edmonton, Canada"),
     Wallpaper("frog", "Frog", R.drawable.wallpaper_frog, "Unsplash"),
     Wallpaper("curve", "Curve", R.drawable.wallpaper_curve, "Unsplash"),
-    Wallpaper("brick", "Brick", R.drawable.wallpaper_brick, "Unsplash"),
-    Wallpaper("oculus", "Oculus", R.drawable.wallpaper_oculus, "Unsplash"),
+    Wallpaper("brick", "Brick", R.drawable.wallpaper_brick, "Unsplash", "Marrakech, Morocco"),
+    Wallpaper("oculus", "Oculus", R.drawable.wallpaper_oculus, "Unsplash", "Rome, Italy"),
     Wallpaper("library", "Library", R.drawable.wallpaper_library, "Unsplash"),
-    Wallpaper("arches", "Arches", R.drawable.wallpaper_arches, "Unsplash"),
-    Wallpaper("figure", "Figure", R.drawable.wallpaper_figure, "Unsplash"),
-    Wallpaper("slats", "Slats", R.drawable.wallpaper_slats, "Unsplash"),
-    Wallpaper("facade", "Facade", R.drawable.wallpaper_facade, "Unsplash"),
+    Wallpaper("arches", "Arches", R.drawable.wallpaper_arches, "Unsplash", "Créteil, France"),
+    Wallpaper("figure", "Figure", R.drawable.wallpaper_figure, "Unsplash", "Arles, France"),
+    Wallpaper("slats", "Slats", R.drawable.wallpaper_slats, "Unsplash", "Shanghai, China"),
+    Wallpaper("facade", "Facade", R.drawable.wallpaper_facade, "Unsplash", "Darmstadt, Germany"),
 )
 
 fun wallpaperById(id: String): Wallpaper = Wallpapers.firstOrNull { it.id == id } ?: Wallpapers.first()

@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.ContentTransform
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -26,6 +27,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -217,16 +219,14 @@ private fun HomeScreen(
         val artLabel = if (look.background == BackgroundMode.Dark) "Dark" else "Art Mode"
         val controls = listOf(artLabel to onArt, "All apps" to onAllApps, "Settings" to onSettings)
         if (look.layout == HomeLayout.List) {
-            Row(
+            ClockCluster(
+                weather = weather,
+                look = look,
+                color = ink.focus,
                 modifier = Modifier
                     .align(Alignment.TopEnd)
                     .padding(top = 48.dp, end = 56.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
-            ) {
-                if (weather != null) WeatherReadout(weather, look.typeface, ink.focus)
-                ClockFace(look.clock, look.typeface, ink.focus)
-            }
+            )
             AppCarousel(
                 apps = apps,
                 typeface = look.typeface,
@@ -260,8 +260,7 @@ private fun HomeScreen(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(22.dp),
             ) {
-                if (weather != null) WeatherReadout(weather, look.typeface, ink.focus)
-                ClockFace(look.clock, look.typeface, ink.focus)
+                ClockCluster(weather, look, ink.focus)
                 Spacer(Modifier.width(12.dp))
                 controls.forEachIndexed { index, (label, action) ->
                     ControlEntry(
@@ -366,6 +365,49 @@ private fun HomeBackground(look: Appearance) {
                     ),
                 )
             }
+        }
+    }
+}
+
+@Composable
+private fun ClockCluster(
+    weather: Weather?,
+    look: Appearance,
+    color: Color,
+    modifier: Modifier = Modifier,
+) {
+    val place = if (look.background == BackgroundMode.Photo) wallpaperById(look.wallpaperId).place else null
+    Column(modifier, horizontalAlignment = Alignment.End) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(16.dp),
+        ) {
+            if (weather != null) WeatherReadout(weather, look.typeface, color)
+            ClockFace(look.clock, look.typeface, color)
+        }
+        AnimatedContent(
+            targetState = place,
+            modifier = Modifier
+                .height(0.dp)
+                .wrapContentHeight(align = Alignment.Top, unbounded = true)
+                .padding(top = 4.dp),
+            transitionSpec = {
+                ContentTransform(
+                    fadeIn(tween(640, easing = MotionEase)),
+                    fadeOut(tween(640, easing = MotionEase)),
+                    sizeTransform = null,
+                )
+            },
+            label = "place",
+        ) { label ->
+            Text(
+                text = label.orEmpty(),
+                color = color.copy(alpha = if (label == null) 0f else 0.78f),
+                style = placeStyle(look.typeface),
+                textAlign = TextAlign.End,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+            )
         }
     }
 }
