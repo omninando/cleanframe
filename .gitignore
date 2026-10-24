@@ -10,6 +10,5 @@ captures/
 *.aab
 
 # Local TV captures that are not part of the docs
-screenshots/now.png
 screenshots/fade.png
 screenshots/google-tv.png
