@@ -4,7 +4,7 @@ A quiet launcher for Android TV. The home screen is a photograph, a short list o
 
 It is inspired by [CleanFrame](https://github.com/nthnclrk/CleanFrame) by Nathan Clark, the home screen he made for a Samsung The Frame. This repository is a separate app for Android TV, written in Kotlin and Jetpack Compose. It is not a port of that project.
 
-![CleanFrame on a television, with Disney+ selected over a geometric facade](screenshots/now.png)
+![CleanFrame on a television, with SVT Play selected over rippling water](screenshots/latest.png)
 
 ## What you get
 
