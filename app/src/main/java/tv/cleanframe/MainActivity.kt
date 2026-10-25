@@ -81,6 +81,16 @@ class MainActivity : ComponentActivity() {
             CleanFrameApp(model)
         }
     }
+
+    override fun onStart() {
+        super.onStart()
+        CleanFrameVisible.showing = true
+    }
+
+    override fun onStop() {
+        CleanFrameVisible.showing = false
+        super.onStop()
+    }
 }
 
 @Composable
@@ -194,11 +204,25 @@ private fun HomeScreen(
     val safeRail = railIndex.coerceIn(0, 2)
 
     var artSeen by remember { mutableStateOf(false) }
-    LaunchedEffect(look.layout, apps.map { it.packageName }) {
-        if (apps.isEmpty()) return@LaunchedEffect
-        delay(40)
-        val target = if (look.layout == HomeLayout.List) listFocus else dockFocus
-        runCatching { target.requestFocus() }
+    val scope = rememberCoroutineScope()
+    val owner = LocalLifecycleOwner.current
+    DisposableEffect(owner, look.layout, apps.isNotEmpty()) {
+        fun focusList() {
+            if (apps.isEmpty()) return
+            val target = if (look.layout == HomeLayout.List) listFocus else dockFocus
+            scope.launch {
+                delay(80)
+                runCatching { target.requestFocus() }
+                delay(240)
+                runCatching { target.requestFocus() }
+            }
+        }
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_RESUME) focusList()
+        }
+        owner.lifecycle.addObserver(observer)
+        if (owner.lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) focusList()
+        onDispose { owner.lifecycle.removeObserver(observer) }
     }
     LaunchedEffect(look.artMode) {
         if (!artSeen) {

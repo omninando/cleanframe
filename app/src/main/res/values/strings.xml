@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="wake_service_description">Opens CleanFrame when the television turns on, and when Home is pressed.</string>
+</resources>
